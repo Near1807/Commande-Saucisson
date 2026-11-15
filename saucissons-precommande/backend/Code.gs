@@ -64,7 +64,7 @@ function traiterCommande(donnees) {
   if (new Date() > new Date(DATE_LIMITE_ISO)) {
     return {
       ok: false,
-      erreur: "Les commandes sont closes depuis le " + formaterDate(DATE_LIMITE_ISO) + "."
+      erreur: "Les commandes sont closes depuis le " + formaterDateEtHeure(DATE_LIMITE_ISO) + "."
     };
   }
 
@@ -423,23 +423,18 @@ function formaterEuros(centimes) {
 }
 
 /*
- * @brief Met une date ISO sous la forme "06/12/2026" (heure de Belgique).
- * @param dateIso Date au format ISO, par exemple "2026-12-06T23:59:59+01:00".
- */
-function formaterDate(dateIso) {
-  return Utilities.formatDate(new Date(dateIso), "Europe/Brussels", "dd/MM/yyyy");
-}
-
-/*
- * @brief Met une date ISO au format belge avec l'heure, par exemple "30/11/2026 à 20h". Sert à rappeler la vraie date limite de paiement dans les mails.
+ * @brief Met une date ISO en toutes lettres avec l'heure, par exemple "30 novembre 2026 à 20h". Même style que les dates écrites sur la page, pour que les mails et le site disent la même chose.
  * @param dateIso Date au format ISO, par exemple DATE_LIMITE_ISO.
  */
 function formaterDateEtHeure(dateIso) {
+  const MOIS = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"];
   const date = new Date(dateIso);
-  const jour = Utilities.formatDate(date, "Europe/Brussels", "dd/MM/yyyy");
+  const jour = Number(Utilities.formatDate(date, "Europe/Brussels", "d"));
+  const mois = Number(Utilities.formatDate(date, "Europe/Brussels", "M"));
+  const annee = Utilities.formatDate(date, "Europe/Brussels", "yyyy");
   const heure = Utilities.formatDate(date, "Europe/Brussels", "H");
   const minutes = Utilities.formatDate(date, "Europe/Brussels", "mm");
-  return jour + " à " + heure + "h" + (minutes === "00" ? "" : minutes);
+  return jour + " " + MOIS[mois - 1] + " " + annee + " à " + heure + "h" + (minutes === "00" ? "" : minutes);
 }
 
 /*
@@ -665,7 +660,7 @@ function construireReponse(commande, mailEnvoye) {
     communication: commande.communication,
     iban: IBAN,
     titulaire: TITULAIRE,
-    dateLimite: formaterDate(DATE_LIMITE_ISO),
+    dateLimite: formaterDateEtHeure(DATE_LIMITE_ISO),
     mailEnvoye: mailEnvoye
   };
 }

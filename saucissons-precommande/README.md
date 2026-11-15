@@ -45,7 +45,7 @@ Les valeurs actuelles sont des exemples.
 | Date limite | `backend/Config.gs` (`DATE_LIMITE_ISO`, la vraie) **et** `site/config.js` (`dateLimiteTexte`, affichage) |
 | Adresse de contact | `backend/Config.gs` **et** `site/config.js` |
 | Adresse du serveur | `site/config.js` (`urlBackend`), voir ci-dessous |
-| **Textes écrits à la main dans `site/index.html`** (présentation, « 6 € la pièce », « à partir de 4 saucissons… 5,50 € », dates de clôture et de retrait « XXX ») | `site/index.html` uniquement : **ils ne se mettent pas à jour tout seuls** quand on change la config, à relire à chaque changement de prix ou de règle |
+| **Textes écrits à la main dans `site/index.html`** (présentation, « 6 € la pièce », « à partir de 4 saucissons… 5,50 € », date de clôture et de retrait) | `site/index.html` uniquement : **ils ne se mettent pas à jour tout seuls** quand on change la config, à relire à chaque changement de prix ou de règle |
 
 Si une valeur d'affichage ne correspond pas à celle du serveur, le serveur refuse la commande (« Les prix ont été mis à jour »). C'est voulu : un écart ne peut pas passer inaperçu.
 
