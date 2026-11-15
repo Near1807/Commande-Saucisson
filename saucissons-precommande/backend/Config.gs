@@ -51,7 +51,7 @@ const DATE_LIMITE_ISO = "2026-11-30T20:00:00+01:00";
 
 /* Informations de paiement affichées sur la page et dans le mail. */
 const IBAN = "BE94 7320 5452 0014";
-const TITULAIRE = "Unité Saint-Paul Waterloo";
+const TITULAIRE = "RP029 - SCOUTS";
 const PREFIXE_COMMUNICATION = "SAUCISSONS";
 
 /* Partage de la marge : la patrouille choisie reçoit ce pourcentage de la marge,
