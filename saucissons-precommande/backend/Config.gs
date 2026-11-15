@@ -50,7 +50,7 @@ const QUANTITE_MAX = 20;
 const DATE_LIMITE_ISO = "2026-12-06T23:59:59+01:00";
 
 /* Informations de paiement affichées sur la page et dans le mail. */
-const IBAN = "BE00 0000 0000 0000";
+const IBAN = "BE94 7320 5452 0014";
 const TITULAIRE = "Unité Saint-Paul Waterloo";
 const PREFIXE_COMMUNICATION = "SAUCISSONS";
 
