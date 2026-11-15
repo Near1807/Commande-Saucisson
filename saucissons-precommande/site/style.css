@@ -1,0 +1,152 @@
+/*
+ * style.css : mise en page. Aucune dépendance externe (polices du système, aucune image distante).
+ * Direction : étiquette de boucher sur fond vert scout, rouge saucisson comme seule couleur forte.
+ */
+
+:root {
+  --encre: #14301f;
+  --fond: #eef1e8;
+  --carte: #ffffff;
+  --rouge: #b3261e;
+  --rouge-pale: #f7e3df;
+  --vert: #2f6b3f;
+  --trait: #d3d9c8;
+  --discret: #566659;
+  --police-titre: "Trebuchet MS", "Segoe UI", system-ui, sans-serif;
+  --police-texte: "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+  color-scheme: light;
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+
+html, body { margin: 0; }
+body {
+  background: var(--fond);
+  color: var(--encre);
+  font-family: var(--police-texte);
+  font-size: 16px;
+  line-height: 1.5;
+  padding-bottom: 100px;
+}
+h1, h2, h3 { font-family: var(--police-titre); margin: 0; line-height: 1.1; text-wrap: balance; }
+
+.conteneur { max-width: 760px; margin: 0 auto; padding: 0 16px; }
+
+.banniere-test { background: var(--encre); color: #dfe8d6; font-size: 13px; text-align: center; padding: 8px 16px; }
+
+/* ---------- En-tête ---------- */
+.hero { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 24px; padding: 36px 0 20px; }
+.hero-texte { flex: 1 1 340px; }
+.surtitre { margin: 0 0 10px; font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--vert); }
+h1 { font-size: clamp(36px, 8vw, 60px); font-weight: 800; letter-spacing: -0.02em; }
+h1 em { font-style: normal; color: var(--rouge); }
+.intro { max-width: 52ch; margin: 14px 0 0; color: var(--discret); font-size: 17px; }
+.dessin { width: 200px; height: auto; flex: 0 0 auto; }
+
+.regles { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; margin: 8px 0; }
+.regle { background: var(--carte); border: 1px solid var(--trait); border-radius: 10px; padding: 12px 14px; font-size: 14px; }
+.regle strong { display: block; font-family: var(--police-titre); font-size: 15px; margin-bottom: 2px; }
+.regle-reduction { border-color: var(--vert); }
+.regle-alerte { border-color: var(--rouge); background: var(--rouge-pale); }
+
+/* ---------- Étapes ---------- */
+.etape { padding: 28px 0 8px; }
+.etape-titre { display: flex; align-items: baseline; gap: 12px; margin-bottom: 14px; padding-bottom: 8px; border-bottom: 2px dashed var(--rouge); }
+.numero { font-family: var(--police-titre); font-weight: 800; font-size: 15px; color: var(--rouge); }
+.etape-titre h2 { font-size: 26px; font-weight: 800; }
+.aide { margin: 0 0 14px; color: var(--discret); font-size: 14px; }
+
+/* ---------- Champs ---------- */
+.champs { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
+.champ { display: flex; flex-direction: column; gap: 5px; font-weight: 600; font-size: 14px; }
+.champ-remarque { margin-top: 14px; }
+input[type=text], input[type=email], input[type=tel], textarea {
+  width: 100%; font: inherit; font-weight: 400; color: var(--encre); background: var(--carte);
+  border: 1.5px solid var(--trait); border-radius: 8px; padding: 11px 12px;
+}
+textarea { min-height: 72px; resize: vertical; }
+input:focus-visible, textarea:focus-visible, button:focus-visible, .choix input:focus-visible + span {
+  outline: 3px solid var(--vert); outline-offset: 2px;
+}
+
+/* Champ piège hors de l'écran (pas display:none, certains robots l'ignorent alors). */
+.piege { position: absolute; left: -9999px; top: auto; width: 1px; height: 1px; overflow: hidden; }
+
+/* ---------- Saucissons ---------- */
+.liste { display: grid; gap: 10px; }
+.carte {
+  display: grid; grid-template-columns: 1fr auto; gap: 8px 16px; align-items: center;
+  background: var(--carte); border: 1.5px solid var(--trait); border-radius: 12px; padding: 14px 16px;
+}
+.carte.choisie { border-color: var(--rouge); background: #fffaf9; }
+.carte h3 { font-size: 19px; font-weight: 700; }
+.carte .description { margin: 2px 0 0; color: var(--discret); font-size: 14px; }
+.carte .details { margin: 2px 0 0; color: var(--discret); font-size: 13px; }
+.carte-quantite { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+.compteur { display: inline-flex; align-items: center; border: 1.5px solid var(--encre); border-radius: 999px; background: var(--carte); overflow: hidden; }
+.compteur button { width: 40px; height: 40px; border: 0; background: transparent; color: var(--encre); font-size: 22px; line-height: 1; cursor: pointer; }
+.compteur button:hover { background: var(--rouge-pale); }
+.compteur button:disabled { color: #a9b3a5; background: transparent; cursor: default; }
+.compteur output { min-width: 34px; text-align: center; font-weight: 700; font-variant-numeric: tabular-nums; }
+.sous-total { min-height: 1.2em; color: var(--rouge); font-size: 13px; font-weight: 700; font-variant-numeric: tabular-nums; }
+
+/* ---------- Choix (patrouille, retrait) ---------- */
+.partage { display: flex; height: 10px; max-width: 360px; margin: 6px 0; border-radius: 999px; overflow: hidden; }
+.partage i { display: block; width: 50%; height: 100%; }
+.partage i:first-child { background: var(--vert); }
+.partage i:last-child { background: var(--rouge); }
+.legende { display: flex; flex-wrap: wrap; gap: 16px; margin: 0 0 16px; color: var(--discret); font-size: 13px; }
+.vert { color: var(--vert); }
+.rouge { color: var(--rouge); }
+
+.choix-ligne { display: flex; flex-wrap: wrap; gap: 10px; }
+.choix-colonne { display: grid; gap: 10px; }
+.choix { position: relative; display: block; }
+.choix input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+.choix span { display: block; padding: 10px 16px; background: var(--carte); border: 1.5px solid var(--trait); border-radius: 999px; font-weight: 500; }
+.choix-colonne .choix span { border-radius: 10px; }
+.choix input:checked + span { background: var(--encre); border-color: var(--encre); color: #fff; }
+
+.consentement { display: flex; align-items: flex-start; gap: 10px; margin-top: 18px; font-size: 14px; }
+.consentement input { width: 20px; height: 20px; margin: 1px 0 0; flex: 0 0 auto; }
+
+.erreur { min-height: 1.4em; margin: 14px 0 0; color: var(--rouge); font-weight: 700; }
+
+/* ---------- Barre du bas ---------- */
+.barre { position: fixed; left: 0; right: 0; bottom: 0; z-index: 5; background: var(--encre); color: #fff; box-shadow: 0 -6px 20px rgba(0, 0, 0, .18); }
+.barre-contenu { display: flex; align-items: center; justify-content: space-between; gap: 12px; max-width: 760px; margin: 0 auto; padding: 12px 16px; }
+.barre-total small { display: block; font-size: 12px; color: #b9c9b8; }
+.barre-total strong { font-family: var(--police-titre); font-size: 28px; font-weight: 800; font-variant-numeric: tabular-nums; }
+.barre-ancien { margin-right: 6px; color: #b9c9b8; font-size: 15px; }
+.bouton { padding: 13px 22px; border: 0; border-radius: 999px; background: var(--rouge); color: #fff; font: inherit; font-weight: 700; cursor: pointer; }
+.bouton:hover { filter: brightness(1.08); }
+.bouton:disabled { filter: grayscale(.4); cursor: default; }
+.bouton:focus-visible { outline-color: #fff; }
+
+/* ---------- Écran de confirmation ---------- */
+.ticket { background: var(--carte); border: 1.5px solid var(--encre); border-radius: 14px; overflow: hidden; }
+.ticket-entete { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 12px; padding: 14px 18px; background: var(--encre); color: #fff; }
+.ticket-entete h3 { font-size: 22px; }
+.ticket-entete span { color: #b9c9b8; font-size: 14px; }
+.ticket-corps { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 22px; padding: 16px 18px; }
+.titre-virement { margin-bottom: 10px; font-size: 18px; }
+.lignes { margin: 0; padding: 0; list-style: none; font-variant-numeric: tabular-nums; }
+.lignes li { display: flex; justify-content: space-between; gap: 12px; padding: 6px 0; border-bottom: 1px dotted var(--trait); }
+.lignes li.total { margin-top: 6px; padding-top: 10px; border-top: 2px solid var(--encre); border-bottom: 0; font-family: var(--police-titre); font-size: 22px; font-weight: 800; }
+.lignes li.reduction { color: var(--vert); font-weight: 700; }
+.banque { margin: 0 0 12px; padding: 12px 14px; background: var(--fond); border-radius: 8px; font-size: 14px; }
+.banque dt { color: var(--discret); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
+.banque dd { margin: 0 0 8px; font-weight: 700; word-break: break-word; }
+.banque dd:last-child { margin-bottom: 0; }
+.ticket-alerte { margin: 0; padding: 12px 18px; background: var(--rouge-pale); border-top: 1.5px solid var(--encre); color: var(--rouge); font-weight: 700; }
+
+.pied { padding: 28px 0 8px; color: var(--discret); font-size: 13px; }
+
+@media (max-width: 480px) {
+  .dessin { width: 150px; }
+  .carte { padding: 12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}

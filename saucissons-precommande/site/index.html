@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Précommande de saucissons – Éclaireurs Saint-Paul Waterloo</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Visible uniquement quand config.js n'a pas d'adresse de serveur (mode test local). -->
+  <div id="banniere-test" class="banniere-test" hidden>
+    Mode test : aucune commande n'est envoyée ni enregistrée. Renseignez urlBackend dans config.js pour passer en mode réel.
+  </div>
+
+  <main class="conteneur">
+
+    <header class="hero">
+      <div class="hero-texte">
+        <p class="surtitre">Éclaireurs · Unité Saint-Paul de Waterloo</p>
+        <h1>Précommande de <em>saucissons</em></h1>
+        <p class="intro">Vous commandez, on achète juste ce qu'il faut. La marge finance les activités de la troupe et la patrouille que vous choisissez.</p>
+      </div>
+      <svg class="dessin" viewBox="0 0 240 150" aria-hidden="true">
+        <path d="M10 14 Q120 34 230 14" stroke="#8a6a3a" fill="none" stroke-width="2.5"/>
+        <g stroke="#8a6a3a" stroke-width="2.5">
+          <line x1="50" y1="20" x2="50" y2="40"/>
+          <line x1="120" y1="24" x2="120" y2="46"/>
+          <line x1="190" y1="20" x2="190" y2="40"/>
+        </g>
+        <rect x="36" y="40" width="28" height="92" rx="14" fill="#b3261e"/>
+        <rect x="106" y="46" width="28" height="98" rx="14" fill="#8e1d17"/>
+        <rect x="176" y="40" width="28" height="82" rx="14" fill="#b3261e"/>
+        <g fill="#f4d9d2" opacity=".85">
+          <circle cx="46" cy="62" r="2.2"/><circle cx="55" cy="84" r="2"/><circle cx="45" cy="104" r="2.2"/>
+          <circle cx="115" cy="72" r="2.2"/><circle cx="125" cy="94" r="2"/><circle cx="116" cy="118" r="2.2"/>
+          <circle cx="186" cy="60" r="2.2"/><circle cx="196" cy="82" r="2"/><circle cx="187" cy="102" r="2.2"/>
+        </g>
+      </svg>
+    </header>
+
+    <!-- Les quatre règles de la vente. Les nombres et la date sont remplis par app.js depuis config.js. -->
+    <div class="regles">
+      <div class="regle">
+        <strong>Précommande</strong>
+        Rien n'est acheté avant la date limite : zéro gaspillage.
+      </div>
+      <div class="regle">
+        <strong>Marge partagée</strong>
+        La moitié pour la troupe, la moitié pour votre patrouille.
+      </div>
+      <div class="regle regle-reduction">
+        <strong id="regle-reduction-titre"></strong>
+        <span id="regle-reduction-texte"></span>
+      </div>
+      <div class="regle regle-alerte">
+        <strong>Paiement obligatoire</strong>
+        Une commande n'est validée qu'une fois payée. Sans paiement avant le <span class="date-limite"></span>, elle est annulée.
+      </div>
+    </div>
+
+    <!-- Tout ce qui est dans #formulaire disparaît une fois la commande envoyée. -->
+    <div id="formulaire">
+
+      <section class="etape" aria-labelledby="titre-1">
+        <div class="etape-titre"><span class="numero">01</span><h2 id="titre-1">Vos coordonnées</h2></div>
+        <div class="champs">
+          <label class="champ" for="prenom">Prénom
+            <input id="prenom" type="text" autocomplete="given-name" maxlength="60">
+          </label>
+          <label class="champ" for="nom">Nom
+            <input id="nom" type="text" autocomplete="family-name" maxlength="60">
+          </label>
+          <label class="champ" for="email">Adresse e-mail
+            <input id="email" type="email" autocomplete="email" maxlength="120">
+          </label>
+          <label class="champ" for="telephone">Téléphone
+            <input id="telephone" type="tel" autocomplete="tel" maxlength="30">
+          </label>
+        </div>
+
+        <!-- Champ piège : caché pour les humains. Un robot le remplit, le serveur refuse alors la commande. -->
+        <div class="piege" aria-hidden="true">
+          <label for="site_web">Ne pas remplir ce champ</label>
+          <input id="site_web" type="text" tabindex="-1" autocomplete="off">
+        </div>
+      </section>
+
+      <section class="etape" aria-labelledby="titre-2">
+        <div class="etape-titre"><span class="numero">02</span><h2 id="titre-2">Vos saucissons</h2></div>
+        <p class="aide">Choisissez la quantité de chaque sorte. Le total se met à jour en bas de l'écran.</p>
+        <div id="liste-saucissons" class="liste"></div>
+        <label class="champ champ-remarque" for="remarque">Une remarque sur la commande ? (facultatif)
+          <textarea id="remarque" maxlength="500"></textarea>
+        </label>
+      </section>
+
+      <section class="etape" aria-labelledby="titre-3">
+        <div class="etape-titre"><span class="numero">03</span><h2 id="titre-3">Soutenez une patrouille</h2></div>
+        <div class="partage" aria-hidden="true"><i></i><i></i></div>
+        <p class="legende">
+          <span><b class="vert">50 %</b> de la marge pour la troupe</span>
+          <span><b class="rouge">50 %</b> pour la patrouille choisie</span>
+        </p>
+        <div id="choix-patrouille" class="choix-ligne" role="radiogroup" aria-label="Patrouille à soutenir"></div>
+      </section>
+
+      <section class="etape" aria-labelledby="titre-4">
+        <div class="etape-titre"><span class="numero">04</span><h2 id="titre-4">Récupérer la commande</h2></div>
+        <div id="choix-retrait" class="choix-colonne" role="radiogroup" aria-label="Mode de retrait"></div>
+
+        <label class="consentement" for="consentement">
+          <input id="consentement" type="checkbox">
+          <span>J'accepte que mes coordonnées servent uniquement à gérer cette commande.</span>
+        </label>
+
+        <p id="erreur" class="erreur" role="alert"></p>
+      </section>
+    </div>
+
+    <!-- Écran de fin : rempli par app.js avec la réponse du serveur. -->
+    <section id="confirmation" class="etape" aria-labelledby="titre-confirmation" hidden>
+      <div class="etape-titre"><span class="numero">05</span><h2 id="titre-confirmation">Commande enregistrée</h2></div>
+
+      <div class="ticket">
+        <div class="ticket-entete">
+          <h3 id="conf-titre"></h3>
+          <span id="conf-numero"></span>
+        </div>
+
+        <div class="ticket-corps">
+          <div>
+            <ul id="conf-lignes" class="lignes"></ul>
+            <p id="conf-details" class="aide"></p>
+          </div>
+
+          <div>
+            <h3 class="titre-virement">Pour valider : faites un virement</h3>
+            <dl class="banque">
+              <dt>Compte</dt><dd id="conf-iban"></dd>
+              <dt>Bénéficiaire</dt><dd id="conf-titulaire"></dd>
+              <dt>Montant</dt><dd id="conf-montant"></dd>
+              <dt>Communication</dt><dd id="conf-communication"></dd>
+            </dl>
+            <p id="conf-mail" class="aide"></p>
+          </div>
+        </div>
+
+        <p class="ticket-alerte">
+          Votre commande sera validée dès réception du paiement. Sans paiement avant le <span class="date-limite"></span>, elle ne sera pas prise en compte.
+        </p>
+      </div>
+    </section>
+
+    <footer class="pied">Les données saisies servent uniquement à gérer cette commande.</footer>
+  </main>
+
+  <!-- Barre fixe en bas : total en direct et bouton de validation. -->
+  <div id="barre" class="barre">
+    <div class="barre-contenu">
+      <div class="barre-total">
+        <small id="barre-info">Aucun saucisson</small>
+        <span><s id="barre-ancien" class="barre-ancien"></s> <strong id="barre-total">0,00 €</strong></span>
+      </div>
+      <button id="bouton-valider" class="bouton" type="button">Valider ma commande</button>
+    </div>
+  </div>
+
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
