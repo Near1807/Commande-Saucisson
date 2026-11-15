@@ -36,7 +36,7 @@ const CONFIG = {
   ],
 
   /* Textes identiques à ceux de Config.gs. */
-  patrouilles: ["Aigles", "Faucons", "Lynx", "Renards", "Toute la troupe"],
+  patrouilles: ["Gibbons", "Pandas", "Koalas", "Toute la troupe"],
   retraits: [
     "Remise en main propre le [date] à [lieu]",
     "Remise via mon animé ou ma famille scoute"

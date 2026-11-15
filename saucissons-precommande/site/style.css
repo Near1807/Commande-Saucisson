@@ -151,6 +151,6 @@ input:focus-visible, textarea:focus-visible, button:focus-visible, .choix input:
   * { transition: none !important; }
 }
 
-/* Photo de l'étal sous l'en-tête */
-.photo-etal { margin: 0 0 28px; }
-.photo-etal img { display: block; width: 100%; height: auto; border-radius: 14px; }
+/* Photo de l'étal : bandeau discret au-dessus des saveurs (recadré, pas pleine hauteur) */
+.photo-etal { margin: 0 0 18px; }
+.photo-etal img { display: block; width: 100%; height: 130px; object-fit: cover; object-position: center 40%; border-radius: 12px; opacity: .92; }

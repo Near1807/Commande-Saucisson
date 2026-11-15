@@ -28,7 +28,7 @@ const SAUCISSONS = [
 const CHOIX_TOUTE_LA_TROUPE = "Toute la troupe";
 
 /* Les patrouilles. Les textes doivent être IDENTIQUES à ceux de site/config.js. */
-const PATROUILLES = ["Aigles", "Faucons", "Lynx", "Renards", CHOIX_TOUTE_LA_TROUPE];
+const PATROUILLES = ["Gibbons", "Pandas", "Koalas", CHOIX_TOUTE_LA_TROUPE];
 
 /* Les modes de retrait. Les textes doivent être IDENTIQUES à ceux de site/config.js. */
 const RETRAITS = [
