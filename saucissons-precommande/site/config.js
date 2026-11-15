@@ -44,7 +44,7 @@ const CONFIG = {
 
   /* Règles de la vente (identiques à Config.gs). */
   quantiteMax: 20,
-  reductionAPartirDe: 3,
+  reductionAPartirDe: 4,
   reductionNumerateur: 1,
-  reductionDenominateur: 6
+  reductionDenominateur: 12
 };

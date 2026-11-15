@@ -37,11 +37,11 @@ const RETRAITS = [
 ];
 
 /* Réduction : on déduit REDUCTION_NUMERATEUR / REDUCTION_DENOMINATEUR du total de la commande
-   (1 / 6 = un sixième) dès que le NOMBRE TOTAL de saucissons (toutes sortes confondues)
-   atteint REDUCTION_A_PARTIR_DE. Avec des saucissons à 6 €, 1/6 de réduction donne 5 € la pièce. */
-const REDUCTION_A_PARTIR_DE = 3;
+   (1 / 12 = un douzième) dès que le NOMBRE TOTAL de saucissons (toutes sortes confondues)
+   atteint REDUCTION_A_PARTIR_DE. Avec des saucissons à 6 €, 1/12 de réduction donne 5,50 € la pièce (plus de 3 saucissons = 4 et plus). */
+const REDUCTION_A_PARTIR_DE = 4;
 const REDUCTION_NUMERATEUR = 1;
-const REDUCTION_DENOMINATEUR = 6;
+const REDUCTION_DENOMINATEUR = 12;
 
 /* Quantité maximale par sorte de saucisson et par commande. */
 const QUANTITE_MAX = 20;
