@@ -30,11 +30,9 @@ const CHOIX_TOUTE_LA_TROUPE = "Toute la troupe";
 /* Les patrouilles. Les textes doivent être IDENTIQUES à ceux de site/config.js. */
 const PATROUILLES = ["Gibbons", "Pandas", "Koalas", CHOIX_TOUTE_LA_TROUPE];
 
-/* Les modes de retrait. Les textes doivent être IDENTIQUES à ceux de site/config.js. */
-const RETRAITS = [
-  "Remise en main propre le 06/12/2026 à 17h sur le parking de l'église Saint Paul, Drève des Chasseurs 14, 1410 Waterloo",
-  "Remise via mon animé ou ma famille scoute"
-];
+/* Lieu et moment du retrait : il n'y en a qu'un, le client n'a rien à choisir. Le texte est écrit tel quel dans le Sheet
+   et dans les mails. La commande est enregistrée et remise au NOM du client. Doit être IDENTIQUE à site/config.js. */
+const RETRAIT = "Remise en main propre le 06/12/2026 à 17h sur le parking de l'église Saint Paul, Drève des Chasseurs 14, 1410 Waterloo";
 
 /* Réduction : on déduit REDUCTION_NUMERATEUR / REDUCTION_DENOMINATEUR du total de la commande
    (1 / 12 = un douzième) dès que le NOMBRE TOTAL de saucissons (toutes sortes confondues)

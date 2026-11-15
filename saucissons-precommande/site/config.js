@@ -37,10 +37,7 @@ const CONFIG = {
 
   /* Textes identiques à ceux de Config.gs. */
   patrouilles: ["Gibbons", "Pandas", "Koalas", "Toute la troupe"],
-  retraits: [
-    "Remise en main propre le 06/12/2026 à 17h sur le parking de l'église Saint Paul, Drève des Chasseurs 14, 1410 Waterloo",
-    "Remise via mon animé ou ma famille scoute"
-  ],
+  retrait: "Remise en main propre le 06/12/2026 à 17h sur le parking de l'église Saint Paul, Drève des Chasseurs 14, 1410 Waterloo",
 
   /* Règles de la vente (identiques à Config.gs). */
   quantiteMax: 20,

@@ -40,7 +40,7 @@ Les valeurs actuelles sont des exemples.
 |---|---|
 | Saucissons, prix de vente, prix d'achat | `backend/Config.gs` (`SAUCISSONS`) **et** `site/config.js` (`saucissons`, sans prix d'achat) |
 | Patrouilles | `backend/Config.gs` **et** `site/config.js` : textes identiques |
-| Modes de retrait (dates, lieux) | `backend/Config.gs` **et** `site/config.js` : textes identiques |
+| Retrait (date, lieu ; un seul, la commande est remise au nom du client) | `backend/Config.gs` (`RETRAIT`) **et** `site/config.js` (`retrait`) : textes identiques |
 | IBAN, titulaire | `backend/Config.gs` uniquement |
 | Date limite | `backend/Config.gs` (`DATE_LIMITE_ISO`, la vraie) **et** `site/config.js` (`dateLimiteTexte`, affichage) |
 | Adresse de contact | `backend/Config.gs` **et** `site/config.js` |
@@ -78,7 +78,7 @@ Tout est dans `backend/Code.gs`, fonction `verifierDonnees` puis `traiterCommand
 | Case d'acceptation obligatoire | Usage des données |
 | Textes nettoyés et limités en longueur | Pas de caractères de contrôle, pas de texte géant |
 | E-mail, téléphone, prénom et nom obligatoires | Pouvoir joindre le client |
-| Patrouille et retrait = exactement un choix de `Config.gs` | Pas de valeur inventée |
+| Patrouille = exactement un choix de `Config.gs` ; le retrait est toujours celui de `RETRAIT`, quoi que la page envoie | Pas de valeur inventée |
 | Identifiants de saucissons connus, quantités entières de 0 à 20 | Pas de quantité négative, décimale ou absurde |
 | Au moins un saucisson | Pas de commande vide |
 | **Prix recalculé par le serveur**, comparé au total envoyé par la page | La page ne décide jamais du montant ; un écart refuse la commande |
