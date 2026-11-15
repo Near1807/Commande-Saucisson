@@ -41,7 +41,7 @@ h1, h2, h3 { font-family: var(--police-titre); margin: 0; line-height: 1.1; text
 .surtitre { margin: 0 0 10px; font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--vert); }
 h1 { font-size: clamp(36px, 8vw, 60px); font-weight: 800; letter-spacing: -0.02em; }
 h1 em { font-style: normal; color: var(--rouge); }
-.intro { max-width: 52ch; margin: 14px 0 0; color: var(--discret); font-size: 17px; }
+.intro { white-space: pre-line; max-width: 52ch; margin: 14px 0 0; color: var(--discret); font-size: 17px; }
 .dessin { width: 200px; height: auto; flex: 0 0 auto; }
 
 .regles { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; margin: 8px 0; }
@@ -154,3 +154,8 @@ input:focus-visible, textarea:focus-visible, button:focus-visible, .choix input:
 /* Photo de l'étal : bandeau discret au-dessus des saveurs (recadré, pas pleine hauteur) */
 .photo-etal { margin: 0 0 18px; }
 .photo-etal img { display: block; width: 100%; height: 130px; object-fit: cover; object-position: center 40%; border-radius: 12px; opacity: .92; }
+
+/* Logo en haut à gauche de la page */
+.logo-page { display: inline-block; margin: 20px 0 0; line-height: 0; }
+.logo-page img { width: 64px; height: 64px; display: block; }
+.hero { padding-top: 14px; }

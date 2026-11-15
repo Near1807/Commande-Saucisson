@@ -410,6 +410,14 @@ function construireCommunication(commande) {
 }
 
 /*
+ * @brief Calcule le prix d'une pièce une fois la réduction appliquée (ex. 5,50 € au lieu de 6 €), pour l'afficher dans les mails. Se base sur le prix du premier saucisson, tous ayant le même prix.
+ */
+function calculerPrixReduit() {
+  const prix = SAUCISSONS[0].prixCentimes;
+  return prix - Math.round(prix * REDUCTION_NUMERATEUR / REDUCTION_DENOMINATEUR);
+}
+
+/*
  * @brief Met un montant en centimes sous la forme "12,50 €".
  * @param centimes Montant en centimes.
  */
@@ -447,7 +455,7 @@ function construireTexteMail(commande) {
   lignes.push("");
   lignes.push("Sous-total : " + formaterEuros(m.sousTotal));
   if (m.reduction > 0) {
-    lignes.push("Réduction de " + REDUCTION_NUMERATEUR + "/" + REDUCTION_DENOMINATEUR + " (à partir de " + REDUCTION_A_PARTIR_DE + " saucissons) : -" + formaterEuros(m.reduction));
+    lignes.push("Tarif réduit à " + formaterEuros(calculerPrixReduit()) + " la pièce (à partir de " + REDUCTION_A_PARTIR_DE + " saucissons) : -" + formaterEuros(m.reduction));
   }
   lignes.push("TOTAL À PAYER : " + formaterEuros(m.total));
   lignes.push("");
@@ -471,6 +479,122 @@ function construireTexteMail(commande) {
 }
 
 /*
+ * @brief Neutralise les caractères spéciaux HTML d'un texte saisi par le client, pour qu'il s'affiche tel quel dans le mail et ne soit jamais interprété comme du code.
+ * @param texte Texte à rendre inoffensif.
+ */
+function echapperHtml(texte) {
+  return String(texte)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+/*
+ * @brief Écrit la version HTML du mail de confirmation (mise en page par tableaux et styles en ligne, car les messageries ignorent les feuilles de style). Contient les mêmes informations que la version texte.
+ * @param commande Commande vérifiée, avec numeroTexte et communication remplis.
+ */
+function construireHtmlMail(commande) {
+  const m = commande.montants;
+  const vert = "#2f6b3f";
+  const encre = "#14301f";
+  const fond = "#eef1e8";
+  const trait = "#d3d9c8";
+  const discret = "#566659";
+  const police = "'Segoe UI', Arial, Helvetica, sans-serif";
+
+  // Lignes du détail de la commande
+  let lignesDetail = "";
+  for (let i = 0; i < SAUCISSONS.length; i++) {
+    if (commande.quantites[i] > 0) {
+      const totalLigne = commande.quantites[i] * SAUCISSONS[i].prixCentimes;
+      lignesDetail +=
+        '<tr>' +
+        '<td style="padding:8px 0;border-bottom:1px solid ' + trait + ';color:' + encre + ';">' + commande.quantites[i] + ' &times; ' + echapperHtml(SAUCISSONS[i].nom) + '</td>' +
+        '<td style="padding:8px 0;border-bottom:1px solid ' + trait + ';color:' + encre + ';text-align:right;white-space:nowrap;">' + formaterEuros(totalLigne) + '</td>' +
+        '</tr>';
+    }
+  }
+
+  // Sous-total et réduction éventuelle
+  let lignesTotaux =
+    '<tr><td style="padding:8px 0;color:' + discret + ';">Sous-total</td>' +
+    '<td style="padding:8px 0;color:' + discret + ';text-align:right;white-space:nowrap;">' + formaterEuros(m.sousTotal) + '</td></tr>';
+  if (m.reduction > 0) {
+    lignesTotaux +=
+      '<tr><td style="padding:8px 0;color:' + vert + ';">Tarif r&eacute;duit &agrave; ' + formaterEuros(calculerPrixReduit()) + ' la pi&egrave;ce (d&egrave;s ' + REDUCTION_A_PARTIR_DE + ' saucissons)</td>' +
+      '<td style="padding:8px 0;color:' + vert + ';text-align:right;white-space:nowrap;">&minus;' + formaterEuros(m.reduction) + '</td></tr>';
+  }
+
+  // Une ligne "libellé : valeur" du bloc de virement
+  function ligneVirement(libelle, valeur) {
+    return '<tr>' +
+      '<td style="padding:6px 12px 6px 0;color:' + discret + ';white-space:nowrap;vertical-align:top;">' + libelle + '</td>' +
+      '<td style="padding:6px 0;color:' + encre + ';font-weight:bold;">' + valeur + '</td>' +
+      '</tr>';
+  }
+
+  return '' +
+    '<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>' +
+    '<body style="margin:0;padding:0;background:' + fond + ';font-family:' + police + ';">' +
+    '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:' + fond + ';padding:24px 12px;"><tr><td align="center">' +
+    '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:560px;background:#ffffff;border-radius:12px;overflow:hidden;">' +
+
+    // En-tête
+    '<tr><td style="background:' + vert + ';padding:20px 28px;">' +
+    '<table role="presentation" cellpadding="0" cellspacing="0"><tr>' +
+    '<td style="padding-right:16px;vertical-align:middle;"><img src="' + URL_LOGO + '" width="56" height="56" alt="Scouts" style="display:block;border:0;"></td>' +
+    '<td style="vertical-align:middle;">' +
+    '<div style="font-size:12px;letter-spacing:1px;text-transform:uppercase;color:#d6e6d9;">Troupe Antoine de Saint-Exup&eacute;ry</div>' +
+    '<div style="font-size:24px;font-weight:bold;color:#ffffff;margin-top:4px;">Commande n&deg; ' + echapperHtml(commande.numeroTexte) + '</div>' +
+    '</td></tr></table>' +
+    '</td></tr>' +
+
+    // Texte d'accueil
+    '<tr><td style="padding:24px 28px 8px 28px;color:' + encre + ';font-size:15px;line-height:1.5;">' +
+    'Bonjour ' + echapperHtml(commande.prenom) + ',<br><br>Merci pour votre commande de saucissons ! Voici le r&eacute;capitulatif.' +
+    '</td></tr>' +
+
+    // Détail et totaux
+    '<tr><td style="padding:8px 28px;font-size:15px;">' +
+    '<table role="presentation" width="100%" cellpadding="0" cellspacing="0">' + lignesDetail + lignesTotaux +
+    '<tr><td style="padding:12px 0 4px 0;border-top:2px solid ' + encre + ';color:' + encre + ';font-weight:bold;font-size:17px;">Total &agrave; payer</td>' +
+    '<td style="padding:12px 0 4px 0;border-top:2px solid ' + encre + ';color:' + encre + ';font-weight:bold;font-size:17px;text-align:right;white-space:nowrap;">' + formaterEuros(m.total) + '</td></tr>' +
+    '</table></td></tr>' +
+
+    // Patrouille et retrait
+    '<tr><td style="padding:16px 28px 8px 28px;font-size:14px;line-height:1.5;color:' + encre + ';">' +
+    '<strong>Patrouille soutenue :</strong> ' + echapperHtml(commande.patrouille) + '<br>' +
+    '<strong>Retrait :</strong> ' + echapperHtml(commande.retrait) +
+    '</td></tr>' +
+
+    // Bloc de virement
+    '<tr><td style="padding:16px 28px 8px 28px;">' +
+    '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:' + fond + ';border:1px solid ' + trait + ';border-radius:10px;"><tr><td style="padding:16px 18px;font-size:14px;">' +
+    '<div style="font-weight:bold;color:' + vert + ';font-size:15px;margin-bottom:8px;">Pour valider votre commande : virement</div>' +
+    '<table role="presentation" cellpadding="0" cellspacing="0" style="font-size:14px;">' +
+    ligneVirement("Compte", echapperHtml(IBAN)) +
+    ligneVirement("B&eacute;n&eacute;ficiaire", echapperHtml(TITULAIRE)) +
+    ligneVirement("Montant", formaterEuros(m.total)) +
+    ligneVirement("Communication", echapperHtml(commande.communication)) +
+    '</table></td></tr></table></td></tr>' +
+
+    // Avertissement
+    '<tr><td style="padding:12px 28px 4px 28px;font-size:13px;line-height:1.5;color:#b3261e;">' +
+    'Votre commande n&rsquo;est valid&eacute;e qu&rsquo;&agrave; r&eacute;ception du paiement. Sans paiement avant le ' + formaterDate(DATE_LIMITE_ISO) + ', elle sera annul&eacute;e.' +
+    '</td></tr>' +
+
+    // Pied
+    '<tr><td style="padding:16px 28px 28px 28px;font-size:13px;line-height:1.5;color:' + discret + ';">' +
+    'Une question ? R&eacute;pondez &agrave; ce mail ou &eacute;crivez &agrave; ' + echapperHtml(EMAIL_CONTACT) + '.<br><br>' +
+    'Merci pour votre soutien !<br><strong style="color:' + encre + ';">' + echapperHtml(NOM_EXPEDITEUR) + '</strong>' +
+    '</td></tr>' +
+
+    '</table></td></tr></table></body></html>';
+}
+
+/*
  * @brief Envoie le mail de confirmation au client et note le résultat ("oui" ou le message d'erreur) dans la colonne "Mail envoyé" du Sheet. Renvoie true si le mail est parti.
  * @param commande Commande vérifiée.
  * @param feuille Onglet Commandes.
@@ -484,6 +608,7 @@ function envoyerMail(commande, feuille, numeroDeLigne) {
       to: commande.email,
       subject: "Votre commande de saucissons n° " + commande.numeroTexte + " : paiement à effectuer",
       body: construireTexteMail(commande),
+      htmlBody: construireHtmlMail(commande),
       name: NOM_EXPEDITEUR,
       replyTo: EMAIL_CONTACT
     });

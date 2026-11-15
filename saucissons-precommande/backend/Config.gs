@@ -59,6 +59,9 @@ const PREFIXE_COMMUNICATION = "SAUCISSONS";
 const PART_PATROUILLE_POURCENT = 50;
 
 /* Mail : adresse de contact (aussi utilisée comme adresse de réponse) et nom de l'expéditeur. */
+/* Adresse du logo affiché en haut du mail (fichier publié avec le site sur GitHub Pages). */
+const URL_LOGO = "https://near1807.github.io/Commande-Saucisson/images/logo.png";
+
 const EMAIL_CONTACT = "troupeadestexupery@gmail.com";
 const NOM_EXPEDITEUR = "Thomas Leman";
 

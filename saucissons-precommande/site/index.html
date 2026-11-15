@@ -4,6 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Précommande de saucissons – Troupe Antoine de Saint-Exupéry - Saint-Paul Waterloo</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="images/favicon-192.png">
+  <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -15,23 +18,13 @@
 
   <main class="conteneur">
 
+    <a class="logo-page" href="./" aria-label="Accueil"><img src="images/logo.png" width="64" height="64" alt="Logo scout"></a>
+
     <header class="hero">
       <div class="hero-texte">
         <p class="surtitre">Troupe Antoine de Saint-Exupéry · Unité Saint-Paul de Waterloo</p>
         <h1>Précommande de <em>saucissons</em></h1>
-        <p class="intro">Les scouts de la troupe Antoine de Saint-Exupéry lancent leur vente de saucissons secs afin de financer leurs activités tout au long de l'année ainsi que leur camp d'été.
-
-Nous vous proposons un large choix de saucissons au prix de 6 € la pièce. À partir de 4 saucissons commandés (plus de 3), chaque saucisson est au prix de 5,50 €.
-
-Chaque commande aide directement les scouts :
-     - 50 % des bénéfices sont reversés à la patrouille de votre choix ;
-     - l'autre moitié permet au staff d'organiser des activités et un camp toujours plus mémorables pour l'ensemble de la troupe.
-
-Comme il s'agit d'une précommande, nous ne prévoyons que les quantités commandées.
-
-Les précommandes seront clôturées le 30 novembre à 20h et le retrait des saucissons aura lieu sur le parking de l'église Saint Paul (Drève des Chasseurs 14, 1410 Waterloo), le 6 décembre à 17h.
-
-Merci pour votre soutien !</p>
+        <p class="intro">Les scouts de la troupe Antoine de Saint-Exupéry vendent des saucissons secs pour financer leurs activités et leur camp d'été. Précommandez les vôtres : nous ne commandons que ce qui est réservé, zéro gaspillage.</p>
       </div>
       <svg class="dessin" viewBox="0 0 240 150" aria-hidden="true">
         <path d="M10 14 Q120 34 230 14" stroke="#8a6a3a" fill="none" stroke-width="2.5"/>
@@ -51,23 +44,27 @@ Merci pour votre soutien !</p>
       </svg>
     </header>
 
-    <!-- Les quatre règles de la vente. Les nombres et la date sont remplis par app.js depuis config.js. -->
+    <!-- Les règles de la vente. Le prix réduit et la date limite sont remplis par app.js depuis config.js ; le retrait est écrit ici à la main. -->
     <div class="regles">
-      <div class="regle">
-        <strong>Précommande</strong>
-        Rien n'est commandé avant la date limite : zéro gaspillage.
-      </div>
-      <div class="regle">
-        <strong>Marge partagée</strong>
-        La moitié pour la troupe, la moitié pour votre patrouille.
-      </div>
       <div class="regle regle-reduction">
         <strong id="regle-reduction-titre"></strong>
         <span id="regle-reduction-texte"></span>
       </div>
+      <div class="regle">
+        <strong>Marge partagée</strong>
+        50 % pour la patrouille de votre choix, 50 % pour la troupe (activités et camp).
+      </div>
+      <div class="regle">
+        <strong>Commande jusqu'au <span class="date-limite"></span></strong>
+        Après cette date, plus de commande possible.
+      </div>
+      <div class="regle">
+        <strong>Retrait le 6 décembre à 17h</strong>
+        Parking de l'église Saint Paul (Drève des Chasseurs 14, 1410 Waterloo), ou via votre animé ou famille scoute.
+      </div>
       <div class="regle regle-alerte">
         <strong>Paiement obligatoire</strong>
-        Une commande n'est validée qu'une fois payée. Sans paiement avant le <span class="date-limite"></span>, elle est annulée.
+        Une commande n'est validée qu'une fois payée. Sans paiement avant la date limite, elle est annulée.
       </div>
     </div>
 

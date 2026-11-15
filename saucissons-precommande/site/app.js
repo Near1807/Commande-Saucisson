@@ -63,14 +63,24 @@ function calculerMontants() {
    ============================================================ */
 
 /*
- * @brief Remplit les textes qui dépendent de config.js : la règle de réduction et la date limite.
+ * @brief Calcule le prix d'une pièce une fois la réduction appliquée, pour l'afficher aux clients (ex. 5,50 € au lieu de 6 €). Même formule que la réduction du total.
+ * @param prixCentimes Prix normal d'une pièce, en centimes.
+ */
+function calculerPrixReduit(prixCentimes) {
+  return prixCentimes - Math.round(prixCentimes * CONFIG.reductionNumerateur / CONFIG.reductionDenominateur);
+}
+
+/*
+ * @brief Remplit les textes qui dépendent de config.js : le prix réduit et la date limite.
  */
 function afficherReglesDeLaVente() {
+  const prixNormal = CONFIG.saucissons[0].prixCentimes;
+  const prixReduit = calculerPrixReduit(prixNormal);
   document.getElementById("regle-reduction-titre").textContent =
-    "Réduction de " + CONFIG.reductionNumerateur + "/" + CONFIG.reductionDenominateur;
+    formaterEuros(prixReduit) + " la pièce dès " + CONFIG.reductionAPartirDe + " saucissons";
   document.getElementById("regle-reduction-texte").textContent =
-    "Dès " + CONFIG.reductionAPartirDe + " saucissons commandés (toutes sortes confondues), " +
-    CONFIG.reductionNumerateur + "/" + CONFIG.reductionDenominateur + " du total est déduit.";
+    "Sinon " + formaterEuros(prixNormal) + " la pièce. Les " + CONFIG.reductionAPartirDe +
+    " saucissons peuvent être de sortes différentes.";
 
   const emplacements = document.querySelectorAll(".date-limite");
   for (const emplacement of emplacements) {
@@ -240,9 +250,9 @@ function mettreAJourAffichage() {
     if (montants.nombreTotal === 1) {
       motSaucisson = "saucisson";
     }
-    message = montants.nombreTotal + " " + motSaucisson + " · plus que " + manquants + " pour " + CONFIG.reductionNumerateur + "/" + CONFIG.reductionDenominateur + " de réduction";
+    message = montants.nombreTotal + " " + motSaucisson + " · plus que " + manquants + " pour passer à " + formaterEuros(calculerPrixReduit(CONFIG.saucissons[0].prixCentimes)) + " la pièce";
   } else {
-    message = montants.nombreTotal + " saucissons · réduction de " + CONFIG.reductionNumerateur + "/" + CONFIG.reductionDenominateur + " appliquée";
+    message = montants.nombreTotal + " saucissons · tarif réduit : " + formaterEuros(calculerPrixReduit(CONFIG.saucissons[0].prixCentimes)) + " la pièce";
   }
   document.getElementById("barre-info").textContent = message;
 
@@ -475,7 +485,7 @@ function afficherConfirmation(commande) {
   }
   if (commande.reduction > 0) {
     ajouterLigneRecap(liste, "Sous-total", formaterEuros(commande.sousTotal), "");
-    ajouterLigneRecap(liste, "Réduction de " + CONFIG.reductionNumerateur + "/" + CONFIG.reductionDenominateur, "-" + formaterEuros(commande.reduction), "reduction");
+    ajouterLigneRecap(liste, "Tarif réduit (" + formaterEuros(calculerPrixReduit(CONFIG.saucissons[0].prixCentimes)) + " la pièce)", "-" + formaterEuros(commande.reduction), "reduction");
   }
   ajouterLigneRecap(liste, "Total à payer", formaterEuros(commande.total), "total");
 
