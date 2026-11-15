@@ -150,3 +150,7 @@ input:focus-visible, textarea:focus-visible, button:focus-visible, .choix input:
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; }
 }
+
+/* Photo de l'étal sous l'en-tête */
+.photo-etal { margin: 0 0 28px; }
+.photo-etal img { display: block; width: 100%; height: auto; border-radius: 14px; }
