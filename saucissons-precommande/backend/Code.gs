@@ -534,9 +534,13 @@ function construireHtmlMail(commande) {
     '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:560px;background:#ffffff;border-radius:12px;overflow:hidden;">' +
 
     // En-tête
-    '<tr><td style="background:' + vert + ';padding:24px 28px;">' +
+    '<tr><td style="background:' + vert + ';padding:20px 28px;">' +
+    '<table role="presentation" cellpadding="0" cellspacing="0"><tr>' +
+    '<td style="padding-right:16px;vertical-align:middle;"><img src="' + URL_LOGO + '" width="56" height="56" alt="Scouts" style="display:block;border:0;"></td>' +
+    '<td style="vertical-align:middle;">' +
     '<div style="font-size:12px;letter-spacing:1px;text-transform:uppercase;color:#d6e6d9;">Troupe Antoine de Saint-Exup&eacute;ry</div>' +
-    '<div style="font-size:24px;font-weight:bold;color:#ffffff;margin-top:6px;">Commande n&deg; ' + echapperHtml(commande.numeroTexte) + '</div>' +
+    '<div style="font-size:24px;font-weight:bold;color:#ffffff;margin-top:4px;">Commande n&deg; ' + echapperHtml(commande.numeroTexte) + '</div>' +
+    '</td></tr></table>' +
     '</td></tr>' +
 
     // Texte d'accueil
