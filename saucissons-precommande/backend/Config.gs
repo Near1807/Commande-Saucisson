@@ -47,7 +47,7 @@ const REDUCTION_DENOMINATEUR = 12;
 const QUANTITE_MAX = 20;
 
 /* Après cette date et cette heure, le serveur refuse les commandes (heure de Belgique, hiver = +01:00, été = +02:00). */
-const DATE_LIMITE_ISO = "2026-12-06T23:59:59+01:00";
+const DATE_LIMITE_ISO = "2026-11-30T20:00:00+01:00";
 
 /* Informations de paiement affichées sur la page et dans le mail. */
 const IBAN = "BE94 7320 5452 0014";

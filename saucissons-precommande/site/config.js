@@ -15,7 +15,7 @@ const CONFIG = {
   urlBackend: "",
 
   /* Date limite affichée aux clients (le serveur applique la vraie, dans Config.gs). */
-  dateLimiteTexte: "06/12/2026",
+  dateLimiteTexte: "30/11/2026 à 20h",
 
   /* Adresse affichée en cas de problème. */
   contact: "troupeadestexupery@gmail.com",
