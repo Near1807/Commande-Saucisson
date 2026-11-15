@@ -32,7 +32,7 @@ const PATROUILLES = ["Gibbons", "Pandas", "Koalas", CHOIX_TOUTE_LA_TROUPE];
 
 /* Lieu et moment du retrait : il n'y en a qu'un, le client n'a rien à choisir. Le texte est écrit tel quel dans le Sheet
    et dans les mails. La commande est enregistrée et remise au NOM du client. Doit être IDENTIQUE à site/config.js. */
-const RETRAIT = "Remise en main propre le 06/12/2026 à 17h sur le parking de l'église Saint Paul, Drève des Chasseurs 14, 1410 Waterloo";
+const RETRAIT = "Remise en main propre le 6 décembre 2026 à 17h sur le parking de l'église Saint Paul, Drève des Chasseurs 14, 1410 Waterloo";
 
 /* Réduction : on déduit REDUCTION_NUMERATEUR / REDUCTION_DENOMINATEUR du total de la commande
    (1 / 12 = un douzième) dès que le NOMBRE TOTAL de saucissons (toutes sortes confondues)
