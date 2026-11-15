@@ -18,16 +18,21 @@ const CONFIG = {
   dateLimiteTexte: "06/12/2026",
 
   /* Adresse affichée en cas de problème. */
-  contact: "contact@exemple.be",
+  contact: "troupeadestexupery@gmail.com",
 
   /* Saucissons : prix en CENTIMES (700 = 7,00 €). Les id doivent être identiques à ceux de Config.gs. */
-  saucissons: [
-    { id: "nature", nom: "Nature",    description: "Le classique, à trancher fin pour l'apéro.", poids: "env. 200 g", prixCentimes: 700 },
-    { id: "ail",    nom: "À l'ail",   description: "Franc et parfumé.",                          poids: "env. 200 g", prixCentimes: 700 },
-    { id: "poivre", nom: "Au poivre", description: "Une croûte poivrée, bien relevé.",           poids: "env. 200 g", prixCentimes: 750 },
-    { id: "noix",   nom: "Aux noix",  description: "Des morceaux de noix, texture croquante.",   poids: "env. 200 g", prixCentimes: 800 },
-    { id: "gouda",  nom: "Au gouda",  description: "Fondant, avec des dés de fromage.",          poids: "env. 200 g", prixCentimes: 800 },
-    { id: "piment", nom: "Au piment", description: "Pour ceux qui aiment qu'on le sente.",       poids: "env. 200 g", prixCentimes: 750 }
+    saucissons: [
+    { id: "pur-porc", nom: "Pur Porc", description: "Le classique, 100 % porc.", poids: "170 g", prixCentimes: 600 },
+    { id: "sanglier", nom: "Sanglier", description: "Une saveur de gibier.", poids: "170 g", prixCentimes: 600 },
+    { id: "fume", nom: "Fumé", description: "Au goût fumé.", poids: "170 g", prixCentimes: 600 },
+    { id: "piment-espelette", nom: "Piment Espelette", description: "Relevé au piment d'Espelette.", poids: "170 g", prixCentimes: 600 },
+    { id: "ail", nom: "À l'Ail", description: "Parfumé à l'ail.", poids: "170 g", prixCentimes: 600 },
+    { id: "cepes", nom: "Cèpes", description: "Aux cèpes.", poids: "170 g", prixCentimes: 600 },
+    { id: "comte", nom: "Comté AOP", description: "Au comté AOP.", poids: "170 g", prixCentimes: 600 },
+    { id: "noisette", nom: "Noisette", description: "Aux noisettes.", poids: "170 g", prixCentimes: 600 },
+    { id: "noix", nom: "Noix", description: "Aux noix.", poids: "170 g", prixCentimes: 600 },
+    { id: "enrobage-poivre", nom: "Enrobage Poivre", description: "Enrobé de poivre.", poids: "170 g", prixCentimes: 600 },
+    { id: "enrobage-herbes", nom: "Enrobage Herbe de Provence", description: "Enrobé d'herbes de Provence.", poids: "170 g", prixCentimes: 600 }
   ],
 
   /* Textes identiques à ceux de Config.gs. */

@@ -11,12 +11,17 @@
 /* Les saucissons en vente. Les prix sont en CENTIMES (700 = 7,00 €) pour éviter les erreurs d'arrondi.
    prixAchatCentimes sert uniquement à calculer la marge dans l'onglet "Synthèse". */
 const SAUCISSONS = [
-  { id: "nature", nom: "Nature",    prixCentimes: 700, prixAchatCentimes: 500 },
-  { id: "ail",    nom: "À l'ail",   prixCentimes: 700, prixAchatCentimes: 500 },
-  { id: "poivre", nom: "Au poivre", prixCentimes: 750, prixAchatCentimes: 540 },
-  { id: "noix",   nom: "Aux noix",  prixCentimes: 800, prixAchatCentimes: 580 },
-  { id: "gouda",  nom: "Au gouda",  prixCentimes: 800, prixAchatCentimes: 580 },
-  { id: "piment", nom: "Au piment", prixCentimes: 750, prixAchatCentimes: 540 }
+  { id: "pur-porc", nom: "Pur Porc", prixCentimes: 600, prixAchatCentimes: 350 },
+  { id: "sanglier", nom: "Sanglier", prixCentimes: 600, prixAchatCentimes: 350 },
+  { id: "fume", nom: "Fumé", prixCentimes: 600, prixAchatCentimes: 350 },
+  { id: "piment-espelette", nom: "Piment Espelette", prixCentimes: 600, prixAchatCentimes: 350 },
+  { id: "ail", nom: "À l'Ail", prixCentimes: 600, prixAchatCentimes: 350 },
+  { id: "cepes", nom: "Cèpes", prixCentimes: 600, prixAchatCentimes: 350 },
+  { id: "comte", nom: "Comté AOP", prixCentimes: 600, prixAchatCentimes: 350 },
+  { id: "noisette", nom: "Noisette", prixCentimes: 600, prixAchatCentimes: 350 },
+  { id: "noix", nom: "Noix", prixCentimes: 600, prixAchatCentimes: 350 },
+  { id: "enrobage-poivre", nom: "Enrobage Poivre", prixCentimes: 600, prixAchatCentimes: 350 },
+  { id: "enrobage-herbes", nom: "Enrobage Herbe de Provence", prixCentimes: 600, prixAchatCentimes: 350 }
 ];
 
 /* Choix proposé aux clients qui ne veulent soutenir aucune patrouille en particulier. */
