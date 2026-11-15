@@ -1,0 +1,34 @@
+# Publie le dossier saucissons-precommande/site sur GitHub Pages
+# à chaque fusion dans main (ou à la demande depuis l'onglet Actions).
+name: Publier le site
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  publier:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploiement.outputs.page_url }}
+    steps:
+      - name: Récupérer le code
+        uses: actions/checkout@v4
+      - name: Préparer le dossier du site
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: saucissons-precommande/site
+      - name: Déployer sur GitHub Pages
+        id: deploiement
+        uses: actions/deploy-pages@v4
