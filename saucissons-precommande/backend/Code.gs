@@ -410,6 +410,14 @@ function construireCommunication(commande) {
 }
 
 /*
+ * @brief Calcule le prix d'une pièce une fois la réduction appliquée (ex. 5,50 € au lieu de 6 €), pour l'afficher dans les mails. Se base sur le prix du premier saucisson, tous ayant le même prix.
+ */
+function calculerPrixReduit() {
+  const prix = SAUCISSONS[0].prixCentimes;
+  return prix - Math.round(prix * REDUCTION_NUMERATEUR / REDUCTION_DENOMINATEUR);
+}
+
+/*
  * @brief Met un montant en centimes sous la forme "12,50 €".
  * @param centimes Montant en centimes.
  */
@@ -447,7 +455,7 @@ function construireTexteMail(commande) {
   lignes.push("");
   lignes.push("Sous-total : " + formaterEuros(m.sousTotal));
   if (m.reduction > 0) {
-    lignes.push("Réduction de " + REDUCTION_NUMERATEUR + "/" + REDUCTION_DENOMINATEUR + " (à partir de " + REDUCTION_A_PARTIR_DE + " saucissons) : -" + formaterEuros(m.reduction));
+    lignes.push("Tarif réduit à " + formaterEuros(calculerPrixReduit()) + " la pièce (à partir de " + REDUCTION_A_PARTIR_DE + " saucissons) : -" + formaterEuros(m.reduction));
   }
   lignes.push("TOTAL À PAYER : " + formaterEuros(m.total));
   lignes.push("");
@@ -515,7 +523,7 @@ function construireHtmlMail(commande) {
     '<td style="padding:8px 0;color:' + discret + ';text-align:right;white-space:nowrap;">' + formaterEuros(m.sousTotal) + '</td></tr>';
   if (m.reduction > 0) {
     lignesTotaux +=
-      '<tr><td style="padding:8px 0;color:' + vert + ';">Réduction (à partir de ' + REDUCTION_A_PARTIR_DE + ' saucissons)</td>' +
+      '<tr><td style="padding:8px 0;color:' + vert + ';">Tarif r&eacute;duit &agrave; ' + formaterEuros(calculerPrixReduit()) + ' la pi&egrave;ce (d&egrave;s ' + REDUCTION_A_PARTIR_DE + ' saucissons)</td>' +
       '<td style="padding:8px 0;color:' + vert + ';text-align:right;white-space:nowrap;">&minus;' + formaterEuros(m.reduction) + '</td></tr>';
   }
 
