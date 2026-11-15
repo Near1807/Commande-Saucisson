@@ -28,30 +28,30 @@ const SAUCISSONS = [
 const CHOIX_TOUTE_LA_TROUPE = "Toute la troupe";
 
 /* Les patrouilles. Les textes doivent être IDENTIQUES à ceux de site/config.js. */
-const PATROUILLES = ["Aigles", "Faucons", "Lynx", "Renards", CHOIX_TOUTE_LA_TROUPE];
+const PATROUILLES = ["Gibbons", "Pandas", "Koalas", CHOIX_TOUTE_LA_TROUPE];
 
 /* Les modes de retrait. Les textes doivent être IDENTIQUES à ceux de site/config.js. */
 const RETRAITS = [
-  "Remise en main propre le [date] à [lieu]",
+  "Remise en main propre le 06/12/2026 à 17h sur le parking de l'église Saint Paul, Drève des Chasseurs 14, 1410 Waterloo",
   "Remise via mon animé ou ma famille scoute"
 ];
 
 /* Réduction : on déduit REDUCTION_NUMERATEUR / REDUCTION_DENOMINATEUR du total de la commande
-   (1 / 6 = un sixième) dès que le NOMBRE TOTAL de saucissons (toutes sortes confondues)
-   atteint REDUCTION_A_PARTIR_DE. Avec des saucissons à 6 €, 1/6 de réduction donne 5 € la pièce. */
-const REDUCTION_A_PARTIR_DE = 3;
+   (1 / 12 = un douzième) dès que le NOMBRE TOTAL de saucissons (toutes sortes confondues)
+   atteint REDUCTION_A_PARTIR_DE. Avec des saucissons à 6 €, 1/12 de réduction donne 5,50 € la pièce (plus de 3 saucissons = 4 et plus). */
+const REDUCTION_A_PARTIR_DE = 4;
 const REDUCTION_NUMERATEUR = 1;
-const REDUCTION_DENOMINATEUR = 6;
+const REDUCTION_DENOMINATEUR = 12;
 
 /* Quantité maximale par sorte de saucisson et par commande. */
 const QUANTITE_MAX = 20;
 
 /* Après cette date et cette heure, le serveur refuse les commandes (heure de Belgique, hiver = +01:00, été = +02:00). */
-const DATE_LIMITE_ISO = "2026-12-06T23:59:59+01:00";
+const DATE_LIMITE_ISO = "2026-11-30T20:00:00+01:00";
 
 /* Informations de paiement affichées sur la page et dans le mail. */
-const IBAN = "BE00 0000 0000 0000";
-const TITULAIRE = "Unité Saint-Paul Waterloo";
+const IBAN = "BE94 7320 5452 0014";
+const TITULAIRE = "RP029 - SCOUTS";
 const PREFIXE_COMMUNICATION = "SAUCISSONS";
 
 /* Partage de la marge : la patrouille choisie reçoit ce pourcentage de la marge,
@@ -60,7 +60,7 @@ const PART_PATROUILLE_POURCENT = 50;
 
 /* Mail : adresse de contact (aussi utilisée comme adresse de réponse) et nom de l'expéditeur. */
 const EMAIL_CONTACT = "troupeadestexupery@gmail.com";
-const NOM_EXPEDITEUR = "Éclaireurs Saint-Paul Waterloo";
+const NOM_EXPEDITEUR = "Thomas Leman";
 
 /* Noms des onglets du Google Sheet. */
 const NOM_FEUILLE_COMMANDES = "Commandes";

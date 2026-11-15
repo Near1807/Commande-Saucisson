@@ -15,7 +15,7 @@ const CONFIG = {
   urlBackend: "",
 
   /* Date limite affichée aux clients (le serveur applique la vraie, dans Config.gs). */
-  dateLimiteTexte: "06/12/2026",
+  dateLimiteTexte: "30/11/2026 à 20h",
 
   /* Adresse affichée en cas de problème. */
   contact: "troupeadestexupery@gmail.com",
@@ -36,15 +36,15 @@ const CONFIG = {
   ],
 
   /* Textes identiques à ceux de Config.gs. */
-  patrouilles: ["Aigles", "Faucons", "Lynx", "Renards", "Toute la troupe"],
+  patrouilles: ["Gibbons", "Pandas", "Koalas", "Toute la troupe"],
   retraits: [
-    "Remise en main propre le [date] à [lieu]",
+    "Remise en main propre le 06/12/2026 à 17h sur le parking de l'église Saint Paul, Drève des Chasseurs 14, 1410 Waterloo",
     "Remise via mon animé ou ma famille scoute"
   ],
 
   /* Règles de la vente (identiques à Config.gs). */
   quantiteMax: 20,
-  reductionAPartirDe: 3,
+  reductionAPartirDe: 4,
   reductionNumerateur: 1,
-  reductionDenominateur: 6
+  reductionDenominateur: 12
 };
