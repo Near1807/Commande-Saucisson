@@ -38,7 +38,7 @@ const CONFIG = {
   /* Textes identiques à ceux de Config.gs. */
   patrouilles: ["Gibbons", "Pandas", "Koalas", "Toute la troupe"],
   retraits: [
-    "Remise en main propre le [date] à [lieu]",
+    "Remise en main propre au local, à l'église Saint Paul, Drève des Chasseurs 14, 1410 Waterloo",
     "Remise via mon animé ou ma famille scoute"
   ],
 

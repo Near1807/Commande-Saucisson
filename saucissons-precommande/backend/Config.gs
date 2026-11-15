@@ -32,7 +32,7 @@ const PATROUILLES = ["Gibbons", "Pandas", "Koalas", CHOIX_TOUTE_LA_TROUPE];
 
 /* Les modes de retrait. Les textes doivent être IDENTIQUES à ceux de site/config.js. */
 const RETRAITS = [
-  "Remise en main propre le [date] à [lieu]",
+  "Remise en main propre au local, à l'église Saint Paul, Drève des Chasseurs 14, 1410 Waterloo",
   "Remise via mon animé ou ma famille scoute"
 ];
 
@@ -60,7 +60,7 @@ const PART_PATROUILLE_POURCENT = 50;
 
 /* Mail : adresse de contact (aussi utilisée comme adresse de réponse) et nom de l'expéditeur. */
 const EMAIL_CONTACT = "troupeadestexupery@gmail.com";
-const NOM_EXPEDITEUR = "Éclaireurs Saint-Paul Waterloo";
+const NOM_EXPEDITEUR = "Thomas Leman";
 
 /* Noms des onglets du Google Sheet. */
 const NOM_FEUILLE_COMMANDES = "Commandes";
