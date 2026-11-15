@@ -139,12 +139,9 @@ function verifierDonnees(donnees) {
     return { erreur: "Indiquez votre numéro de téléphone." };
   }
 
-  // Patrouille et retrait : doivent être EXACTEMENT l'un des choix de Config.gs.
+  // Patrouille : doit être EXACTEMENT l'un des choix de Config.gs.
   if (PATROUILLES.indexOf(donnees.patrouille) === -1) {
     return { erreur: "Patrouille inconnue. Rechargez la page et réessayez." };
-  }
-  if (RETRAITS.indexOf(donnees.retrait) === -1) {
-    return { erreur: "Mode de retrait inconnu. Rechargez la page et réessayez." };
   }
 
   // Quantités : un objet { idDuSaucisson: quantité }.
@@ -192,7 +189,7 @@ function verifierDonnees(donnees) {
       telephone: telephone,
       remarque: remarque,
       patrouille: donnees.patrouille,
-      retrait: donnees.retrait,
+      retrait: RETRAIT,   // un seul retrait : on ignore ce que la page envoie
       quantites: quantites,
       montants: montants
     }
@@ -434,6 +431,18 @@ function formaterDate(dateIso) {
 }
 
 /*
+ * @brief Met une date ISO au format belge avec l'heure, par exemple "30/11/2026 à 20h". Sert à rappeler la vraie date limite de paiement dans les mails.
+ * @param dateIso Date au format ISO, par exemple DATE_LIMITE_ISO.
+ */
+function formaterDateEtHeure(dateIso) {
+  const date = new Date(dateIso);
+  const jour = Utilities.formatDate(date, "Europe/Brussels", "dd/MM/yyyy");
+  const heure = Utilities.formatDate(date, "Europe/Brussels", "H");
+  const minutes = Utilities.formatDate(date, "Europe/Brussels", "mm");
+  return jour + " à " + heure + "h" + (minutes === "00" ? "" : minutes);
+}
+
+/*
  * @brief Écrit le texte du mail de confirmation (texte brut, sans mise en forme) avec le récapitulatif et la demande de virement.
  * @param commande Commande vérifiée, avec numeroTexte et communication remplis.
  */
@@ -461,6 +470,7 @@ function construireTexteMail(commande) {
   lignes.push("");
   lignes.push("Patrouille soutenue : " + commande.patrouille);
   lignes.push("Retrait : " + commande.retrait);
+  lignes.push("Votre commande est enregistrée à votre nom : donnez simplement votre nom lors du retrait.");
   lignes.push("");
   lignes.push("POUR VALIDER VOTRE COMMANDE, merci d'effectuer un virement :");
   lignes.push("- Compte : " + IBAN);
@@ -468,7 +478,7 @@ function construireTexteMail(commande) {
   lignes.push("- Montant : " + formaterEuros(m.total));
   lignes.push("- Communication : " + commande.communication);
   lignes.push("");
-  lignes.push("Votre commande n'est validée qu'à réception du paiement. Sans paiement avant le " + formaterDate(DATE_LIMITE_ISO) + ", elle sera annulée.");
+  lignes.push("Votre commande n'est validée qu'à réception du paiement. Sans paiement avant le " + formaterDateEtHeure(DATE_LIMITE_ISO) + ", elle sera annulée.");
   lignes.push("");
   lignes.push("Une question ? Répondez à ce mail ou écrivez à " + EMAIL_CONTACT + ".");
   lignes.push("");
@@ -566,7 +576,8 @@ function construireHtmlMail(commande) {
     // Patrouille et retrait
     '<tr><td style="padding:16px 28px 8px 28px;font-size:14px;line-height:1.5;color:' + encre + ';">' +
     '<strong>Patrouille soutenue :</strong> ' + echapperHtml(commande.patrouille) + '<br>' +
-    '<strong>Retrait :</strong> ' + echapperHtml(commande.retrait) +
+    '<strong>Retrait :</strong> ' + echapperHtml(commande.retrait) + '<br>' +
+    '<span style="color:' + discret + ';">Votre commande est enregistr&eacute;e &agrave; votre nom : donnez simplement votre nom lors du retrait.</span>' +
     '</td></tr>' +
 
     // Bloc de virement
@@ -582,7 +593,7 @@ function construireHtmlMail(commande) {
 
     // Avertissement
     '<tr><td style="padding:12px 28px 4px 28px;font-size:13px;line-height:1.5;color:#b3261e;">' +
-    'Votre commande n&rsquo;est valid&eacute;e qu&rsquo;&agrave; r&eacute;ception du paiement. Sans paiement avant le ' + formaterDate(DATE_LIMITE_ISO) + ', elle sera annul&eacute;e.' +
+    'Votre commande n&rsquo;est valid&eacute;e qu&rsquo;&agrave; r&eacute;ception du paiement. Sans paiement avant le <strong>' + formaterDateEtHeure(DATE_LIMITE_ISO) + '</strong>, elle sera annul&eacute;e.' +
     '</td></tr>' +
 
     // Pied
@@ -606,7 +617,7 @@ function envoyerMail(commande, feuille, numeroDeLigne) {
   try {
     MailApp.sendEmail({
       to: commande.email,
-      subject: "Votre commande de saucissons n° " + commande.numeroTexte + " : paiement à effectuer",
+      subject: "Commande de saucissons n° " + commande.numeroTexte + " : récapitulatif et virement",
       body: construireTexteMail(commande),
       htmlBody: construireHtmlMail(commande),
       name: NOM_EXPEDITEUR,

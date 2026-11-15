@@ -293,7 +293,6 @@ function lireFormulaire() {
     telephone: document.getElementById("telephone").value.trim(),
     remarque: document.getElementById("remarque").value.trim(),
     patrouille: lireChoix("patrouille"),
-    retrait: lireChoix("retrait"),
     consentement: document.getElementById("consentement").checked,
     site_web: document.getElementById("site_web").value,
     quantites: Object.assign({}, quantites),
@@ -320,9 +319,6 @@ function verifierFormulaire(donnees) {
   }
   if (donnees.patrouille === "") {
     return "Choisissez la patrouille à soutenir (étape 3).";
-  }
-  if (donnees.retrait === "") {
-    return "Choisissez comment récupérer votre commande (étape 4).";
   }
   if (!donnees.consentement) {
     return "Cochez la case d'acceptation pour pouvoir envoyer la commande (étape 4).";
@@ -370,7 +366,7 @@ function simulerReponseDuServeur(donnees) {
       nom: donnees.nom,
       email: donnees.email,
       patrouille: donnees.patrouille,
-      retrait: donnees.retrait,
+      retrait: CONFIG.retrait,
       lignes: lignes,
       nombreTotal: montants.nombreTotal,
       sousTotal: montants.sousTotal,
@@ -490,7 +486,7 @@ function afficherConfirmation(commande) {
   ajouterLigneRecap(liste, "Total à payer", formaterEuros(commande.total), "total");
 
   document.getElementById("conf-details").textContent =
-    "Patrouille soutenue : " + commande.patrouille + ". Retrait : " + commande.retrait + ".";
+    "Patrouille soutenue : " + commande.patrouille + ". Retrait : " + commande.retrait + ". Votre commande est à votre nom : donnez simplement votre nom lors du retrait.";
 
   document.getElementById("conf-iban").textContent = commande.iban;
   document.getElementById("conf-titulaire").textContent = commande.titulaire;
@@ -499,7 +495,7 @@ function afficherConfirmation(commande) {
 
   if (commande.mailEnvoye) {
     document.getElementById("conf-mail").textContent =
-      "Un mail récapitulatif vient d'être envoyé à " + commande.email + ".";
+      "Un mail récapitulatif vient d'être envoyé à " + commande.email + ". Il peut arriver dans vos courriers indésirables (spams) : vérifiez-les si vous ne le voyez pas.";
   } else {
     document.getElementById("conf-mail").textContent =
       "Le mail récapitulatif n'a pas pu être envoyé : conservez bien les informations de paiement ci-dessus.";
@@ -528,7 +524,6 @@ function demarrer() {
   afficherReglesDeLaVente();
   afficherSaucissons();
   afficherChoix("choix-patrouille", "patrouille", CONFIG.patrouilles);
-  afficherChoix("choix-retrait", "retrait", CONFIG.retraits);
   mettreAJourAffichage();
 
   document.getElementById("bouton-valider").addEventListener("click", validerCommande);
