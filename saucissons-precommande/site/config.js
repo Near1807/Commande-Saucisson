@@ -12,7 +12,7 @@ const CONFIG = {
 
   /* Adresse du serveur : l'URL de déploiement Apps Script (elle se termine par /exec).
      Laisser vide ("") = mode test : la page fonctionne seule, sans rien envoyer. */
-  urlBackend: "",
+  urlBackend: "https://script.google.com/macros/s/AKfycbxfIPgoFmfK8-mU2Kl65wy71vNVrVclvklLlgO8NaR-fPH_G8NfhagFeoOJkyFCw26EBA/exec",
 
   /* Date limite affichée aux clients (le serveur applique la vraie, dans Config.gs). */
   dateLimiteTexte: "30/11/2026 à 20h",
