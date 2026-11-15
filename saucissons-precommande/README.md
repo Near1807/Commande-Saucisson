@@ -26,7 +26,7 @@ Le Sheet est la base de données : Fichier → Télécharger → Microsoft Excel
 
 ## Règles de la vente (dans `backend/Config.gs`)
 
-- **Réduction** : 25 % sur le total dès que la commande contient **6 saucissons ou plus, toutes sortes confondues**. Le calcul est `réduction = arrondi(sous-total × 25 / 100)`, en centimes.
+- **Réduction** : **1/6 du total** dès que la commande contient **3 saucissons ou plus, toutes sortes confondues**. Le calcul est `réduction = arrondi(sous-total × 1 / 6)`, en centimes : avec des saucissons à 6 €, la pièce passe à 5 €. Les trois valeurs (seuil, numérateur, dénominateur) se règlent dans `Config.gs` (`REDUCTION_A_PARTIR_DE`, `REDUCTION_NUMERATEUR`, `REDUCTION_DENOMINATEUR`) et dans `config.js` (`reductionAPartirDe`, `reductionNumerateur`, `reductionDenominateur`).
 - **Quantité** : de 0 à 20 par sorte.
 - **Date limite** : après la date de `DATE_LIMITE_ISO`, le serveur refuse toute commande.
 - **Paiement** : la commande n'est validée qu'une fois payée. La colonne **Payé** (case à cocher) se coche à la main en lisant le relevé de compte.
@@ -45,6 +45,7 @@ Les valeurs actuelles sont des exemples.
 | Date limite | `backend/Config.gs` (`DATE_LIMITE_ISO`, la vraie) **et** `site/config.js` (`dateLimiteTexte`, affichage) |
 | Adresse de contact | `backend/Config.gs` **et** `site/config.js` |
 | Adresse du serveur | `site/config.js` (`urlBackend`), voir ci-dessous |
+| **Textes écrits à la main dans `site/index.html`** (présentation, « 6 € la pièce », « à partir de 3 saucissons… 5 € », dates de clôture et de retrait « XXX ») | `site/index.html` uniquement : **ils ne se mettent pas à jour tout seuls** quand on change la config, à relire à chaque changement de prix ou de règle |
 
 Si une valeur d'affichage ne correspond pas à celle du serveur, le serveur refuse la commande (« Les prix ont été mis à jour »). C'est voulu : un écart ne peut pas passer inaperçu.
 

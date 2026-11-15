@@ -36,10 +36,12 @@ const RETRAITS = [
   "Remise via mon animé ou ma famille scoute"
 ];
 
-/* Réduction : REDUCTION_POURCENT % sur le total de la commande dès que le NOMBRE TOTAL
-   de saucissons (toutes sortes confondues) atteint REDUCTION_A_PARTIR_DE. */
-const REDUCTION_A_PARTIR_DE = 6;
-const REDUCTION_POURCENT = 25;
+/* Réduction : on déduit REDUCTION_NUMERATEUR / REDUCTION_DENOMINATEUR du total de la commande
+   (1 / 6 = un sixième) dès que le NOMBRE TOTAL de saucissons (toutes sortes confondues)
+   atteint REDUCTION_A_PARTIR_DE. Avec des saucissons à 6 €, 1/6 de réduction donne 5 € la pièce. */
+const REDUCTION_A_PARTIR_DE = 3;
+const REDUCTION_NUMERATEUR = 1;
+const REDUCTION_DENOMINATEUR = 6;
 
 /* Quantité maximale par sorte de saucisson et par commande. */
 const QUANTITE_MAX = 20;
@@ -57,7 +59,7 @@ const PREFIXE_COMMUNICATION = "SAUCISSONS";
 const PART_PATROUILLE_POURCENT = 50;
 
 /* Mail : adresse de contact (aussi utilisée comme adresse de réponse) et nom de l'expéditeur. */
-const EMAIL_CONTACT = "contact@exemple.be";
+const EMAIL_CONTACT = "troupeadestexupery@gmail.com";
 const NOM_EXPEDITEUR = "Éclaireurs Saint-Paul Waterloo";
 
 /* Noms des onglets du Google Sheet. */

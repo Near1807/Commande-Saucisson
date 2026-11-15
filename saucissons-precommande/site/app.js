@@ -46,7 +46,7 @@ function calculerMontants() {
 
   let reduction = 0;
   if (nombreTotal >= CONFIG.reductionAPartirDe) {
-    reduction = Math.round(sousTotal * CONFIG.reductionPourcent / 100);
+    reduction = Math.round(sousTotal * CONFIG.reductionNumerateur / CONFIG.reductionDenominateur);
   }
 
   return {
@@ -67,10 +67,10 @@ function calculerMontants() {
  */
 function afficherReglesDeLaVente() {
   document.getElementById("regle-reduction-titre").textContent =
-    "Réduction de " + CONFIG.reductionPourcent + " %";
+    "Réduction de " + CONFIG.reductionNumerateur + "/" + CONFIG.reductionDenominateur;
   document.getElementById("regle-reduction-texte").textContent =
     "Dès " + CONFIG.reductionAPartirDe + " saucissons commandés (toutes sortes confondues), " +
-    CONFIG.reductionPourcent + " % sont déduits du total.";
+    CONFIG.reductionNumerateur + "/" + CONFIG.reductionDenominateur + " du total est déduit.";
 
   const emplacements = document.querySelectorAll(".date-limite");
   for (const emplacement of emplacements) {
@@ -240,9 +240,9 @@ function mettreAJourAffichage() {
     if (montants.nombreTotal === 1) {
       motSaucisson = "saucisson";
     }
-    message = montants.nombreTotal + " " + motSaucisson + " · plus que " + manquants + " pour -" + CONFIG.reductionPourcent + " %";
+    message = montants.nombreTotal + " " + motSaucisson + " · plus que " + manquants + " pour " + CONFIG.reductionNumerateur + "/" + CONFIG.reductionDenominateur + " de réduction";
   } else {
-    message = montants.nombreTotal + " saucissons · réduction de " + CONFIG.reductionPourcent + " % appliquée";
+    message = montants.nombreTotal + " saucissons · réduction de " + CONFIG.reductionNumerateur + "/" + CONFIG.reductionDenominateur + " appliquée";
   }
   document.getElementById("barre-info").textContent = message;
 
@@ -475,7 +475,7 @@ function afficherConfirmation(commande) {
   }
   if (commande.reduction > 0) {
     ajouterLigneRecap(liste, "Sous-total", formaterEuros(commande.sousTotal), "");
-    ajouterLigneRecap(liste, "Réduction de " + CONFIG.reductionPourcent + " %", "-" + formaterEuros(commande.reduction), "reduction");
+    ajouterLigneRecap(liste, "Réduction de " + CONFIG.reductionNumerateur + "/" + CONFIG.reductionDenominateur, "-" + formaterEuros(commande.reduction), "reduction");
   }
   ajouterLigneRecap(liste, "Total à payer", formaterEuros(commande.total), "total");
 

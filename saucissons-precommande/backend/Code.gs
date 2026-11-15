@@ -214,7 +214,7 @@ function calculerMontants(quantites) {
 
   let reduction = 0;
   if (nombreTotal >= REDUCTION_A_PARTIR_DE) {
-    reduction = Math.round(sousTotal * REDUCTION_POURCENT / 100);
+    reduction = Math.round(sousTotal * REDUCTION_NUMERATEUR / REDUCTION_DENOMINATEUR);
   }
 
   return {
@@ -447,7 +447,7 @@ function construireTexteMail(commande) {
   lignes.push("");
   lignes.push("Sous-total : " + formaterEuros(m.sousTotal));
   if (m.reduction > 0) {
-    lignes.push("Réduction de " + REDUCTION_POURCENT + " % (à partir de " + REDUCTION_A_PARTIR_DE + " saucissons) : -" + formaterEuros(m.reduction));
+    lignes.push("Réduction de " + REDUCTION_NUMERATEUR + "/" + REDUCTION_DENOMINATEUR + " (à partir de " + REDUCTION_A_PARTIR_DE + " saucissons) : -" + formaterEuros(m.reduction));
   }
   lignes.push("TOTAL À PAYER : " + formaterEuros(m.total));
   lignes.push("");
