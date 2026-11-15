@@ -29,10 +29,10 @@ const CONFIG = {
     { id: "ail", nom: "À l'Ail", description: "Parfumé à l'ail.", poids: "170 g", prixCentimes: 600 },
     { id: "cepes", nom: "Cèpes", description: "Aux cèpes.", poids: "170 g", prixCentimes: 600 },
     { id: "comte", nom: "Comté AOP", description: "Au comté AOP.", poids: "170 g", prixCentimes: 600 },
-    { id: "noisette", nom: "Noisette", description: "Aux noisettes.", poids: "170 g", prixCentimes: 600 },
+    { id: "noisette", nom: "Noisettes", description: "Aux noisettes.", poids: "170 g", prixCentimes: 600 },
     { id: "noix", nom: "Noix", description: "Aux noix.", poids: "170 g", prixCentimes: 600 },
     { id: "enrobage-poivre", nom: "Enrobage Poivre", description: "Enrobé de poivre.", poids: "170 g", prixCentimes: 600 },
-    { id: "enrobage-herbes", nom: "Enrobage Herbe de Provence", description: "Enrobé d'herbes de Provence.", poids: "170 g", prixCentimes: 600 }
+    { id: "enrobage-herbes", nom: "Enrobage Herbes de Provence", description: "Enrobé d'herbes de Provence.", poids: "170 g", prixCentimes: 600 }
   ],
 
   /* Textes identiques à ceux de Config.gs. */
