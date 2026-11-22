@@ -129,6 +129,24 @@
     </div>
 
     <!-- Écran de fin : rempli par app.js avec la réponse du serveur. -->
+    <!-- Fenêtre « Vérifiez votre commande » : s'ouvre au clic sur Valider, rien n'est envoyé avant le « Oui ». Remplie par app.js. -->
+    <div id="fenetre-confirmation" class="fenetre-fond" hidden>
+      <div class="fenetre" role="dialog" aria-modal="true" aria-labelledby="dialogue-titre">
+        <h2 id="dialogue-titre">Vérifiez votre commande avant de l'envoyer</h2>
+        <p class="dialogue-alerte">
+          Attention : en cliquant sur « Oui, envoyer ma commande », elle est enregistrée immédiatement.
+          Vous ne pourrez plus la modifier ici, et vous devrez payer par virement avant le <span class="date-limite"></span>.
+        </p>
+        <ul id="dialogue-lignes" class="lignes"></ul>
+        <p id="dialogue-contact" class="aide"></p>
+        <p class="aide">Le récapitulatif sera envoyé à <strong id="dialogue-email"></strong> : vérifiez que cette adresse est correcte.</p>
+        <div class="fenetre-boutons">
+          <button id="dialogue-annuler" class="bouton bouton-secondaire" type="button">Non, modifier</button>
+          <button id="dialogue-confirmer" class="bouton" type="button">Oui, envoyer ma commande</button>
+        </div>
+      </div>
+    </div>
+
     <section id="confirmation" class="etape" aria-labelledby="titre-confirmation" hidden>
       <div class="etape-titre"><span class="numero">05</span><h2 id="titre-confirmation">Commande enregistrée</h2></div>
 
