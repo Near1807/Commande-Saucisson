@@ -382,9 +382,9 @@ function simulerReponseDuServeur(donnees) {
 }
 
 /*
- * @brief Vérifie le formulaire, envoie la commande au serveur (ou la simule en mode test) et affiche le résultat. Appelée au clic sur "Valider ma commande".
+ * @brief Vérifie le formulaire puis ouvre la fenêtre de confirmation. N'envoie RIEN : l'envoi n'a lieu que si le client confirme dans cette fenêtre. Appelée au clic sur "Valider ma commande".
  */
-async function validerCommande() {
+function validerCommande() {
   if (envoiEnCours) {
     return;
   }
@@ -394,6 +394,63 @@ async function validerCommande() {
   const erreur = verifierFormulaire(donnees);
   if (erreur !== "") {
     afficherErreur(erreur);
+    return;
+  }
+
+  ouvrirFenetreConfirmation(donnees);
+}
+
+/*
+ * @brief Affiche la fenêtre « Vérifiez votre commande » : contacts, détail, total et avertissement que l'envoi est définitif. Le bouton d'annulation reçoit le focus pour qu'un appui sur Entrée ne confirme jamais par erreur.
+ * @param donnees Contenu du formulaire déjà vérifié (voir lireFormulaire). Il est conservé tel quel jusqu'à la confirmation.
+ */
+function ouvrirFenetreConfirmation(donnees) {
+  const montants = calculerMontants();
+
+  const liste = document.getElementById("dialogue-lignes");
+  liste.textContent = "";
+  for (const saucisson of CONFIG.saucissons) {
+    const quantite = quantites[saucisson.id];
+    if (quantite > 0) {
+      ajouterLigneRecap(liste, quantite + " × " + saucisson.nom, formaterEuros(quantite * saucisson.prixCentimes), "");
+    }
+  }
+  if (montants.reduction > 0) {
+    ajouterLigneRecap(liste, "Sous-total", formaterEuros(montants.sousTotal), "");
+    ajouterLigneRecap(liste, "Tarif réduit (" + formaterEuros(calculerPrixReduit(CONFIG.saucissons[0].prixCentimes)) + " la pièce)", "-" + formaterEuros(montants.reduction), "reduction");
+  }
+  ajouterLigneRecap(liste, "Total à payer", formaterEuros(montants.total), "total");
+
+  document.getElementById("dialogue-contact").textContent =
+    donnees.prenom + " " + donnees.nom + " · " + donnees.email + " · " + donnees.telephone + " · Patrouille : " + donnees.patrouille;
+  document.getElementById("dialogue-email").textContent = donnees.email;
+
+  const fenetre = document.getElementById("fenetre-confirmation");
+  fenetre.hidden = false;
+  document.getElementById("dialogue-annuler").focus();
+
+  // Un clic sur "Oui" envoie CETTE commande ; on remplace l'écouteur à chaque ouverture pour ne jamais envoyer d'anciennes données.
+  document.getElementById("dialogue-confirmer").onclick = function () {
+    fermerFenetreConfirmation();
+    envoyerCommande(donnees);
+  };
+}
+
+/*
+ * @brief Ferme la fenêtre de confirmation sans rien envoyer. Le formulaire reste tel que le client l'a rempli.
+ */
+function fermerFenetreConfirmation() {
+  document.getElementById("fenetre-confirmation").hidden = true;
+  document.getElementById("dialogue-confirmer").onclick = null;
+  document.getElementById("bouton-valider").focus();
+}
+
+/*
+ * @brief Envoie la commande au serveur (ou la simule en mode test) et affiche le résultat. Appelée uniquement après la confirmation du client.
+ * @param donnees Contenu du formulaire déjà vérifié et confirmé.
+ */
+async function envoyerCommande(donnees) {
+  if (envoiEnCours) {
     return;
   }
 
@@ -527,6 +584,14 @@ function demarrer() {
   mettreAJourAffichage();
 
   document.getElementById("bouton-valider").addEventListener("click", validerCommande);
+  document.getElementById("dialogue-annuler").addEventListener("click", fermerFenetreConfirmation);
+
+  // Touche Échap : ferme la fenêtre de confirmation (jamais d'envoi).
+  document.addEventListener("keydown", function (evenement) {
+    if (evenement.key === "Escape" && !document.getElementById("fenetre-confirmation").hidden) {
+      fermerFenetreConfirmation();
+    }
+  });
 }
 
 demarrer();

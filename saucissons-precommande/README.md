@@ -17,7 +17,7 @@ backend/     L'arrière-boutique (Google Apps Script)
 ## Comment ça marche
 
 1. Le client remplit la page. Le total se calcule en direct dans son navigateur (simple aide).
-2. Au clic sur « Valider », la page envoie la commande au serveur (`doPost` dans `Code.gs`).
+2. Au clic sur « Valider », la page vérifie le formulaire puis ouvre une **fenêtre de confirmation** (détail, total, adresse e-mail, avertissement que l'envoi est définitif). Rien n'est envoyé tant que le client n'a pas cliqué sur « Oui, envoyer ma commande » ; « Non, modifier » ou la touche Échap referment la fenêtre. Seul le « Oui » envoie la commande au serveur (`doPost` dans `Code.gs`).
 3. Le serveur **refait tous les contrôles et recalcule le prix lui-même**, à partir de `Config.gs`.
 4. Il écrit une ligne dans l'onglet **Commandes** du Sheet, envoie le mail, puis répond à la page.
 5. La page affiche le récapitulatif et la demande de virement (compte, bénéficiaire, montant, communication unique) fournis par le serveur.
